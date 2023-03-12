@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Stopwatch</title>
+    <style>
+      #timer {
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timer">00:00:00</div>
+    <button id="start-stop">Start</button>
+    <button id="reset">Reset</button>
+    <script>
+      const timerDisplay = document.querySelector('#timer');
+      let count = 0;
+
+      let interval;
+
+      function startStop() {
+        const startStopButton = document.querySelector('#start-stop');
+        if (startStopButton.innerHTML === 'Start') {
+          interval = setInterval(() => {
+            count++;
+            const minutes = Math.floor(count / 60);
+            const seconds = count % 60;
+            timerDisplay.innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+          }, 1000);
+          startStopButton.innerHTML = 'Stop';
+        } else {
+          clearInterval(interval);
+          startStopButton.innerHTML = 'Start';
+        }
+
+      }
+
+      function reset() {
+        clearInterval(interval);
+        count = 0;
+        timerDisplay.innerHTML = '00:00';
+        document.querySelector('#start-stop').innerHTML = 'Start';
+      }
+
+      document.querySelector('#start-stop').addEventListener('click', startStop);
+      document.querySelector('#reset').addEventListener('click', reset);
+    </script>
+  </body>
+</html>
